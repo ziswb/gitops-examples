@@ -1,0 +1,40 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: monitoring-appset
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - team: team-green
+                  namespace: team-green-mon
+                - team: team-blue
+                  namespace: blue-monitoring
+          - git:
+              directories:
+                - path: monitoring-appset/*
+              repoURL: https://github.com/mocdaniel/gitops-examples
+              revision: HEAD
+  goTemplate: true
+  template:
+    metadata:
+      name: "{{ .team }}-{{ .path.basename }}"
+    spec:
+      project: team-monitoring
+      source:
+        repoURL: https://github.com/mocdaniel/gitops-examples
+        targetRevision: HEAD
+        path: "{{ .path.path }}"
+        helm:
+          valueFiles:
+            - values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .namespace }}" # this is dangerous!
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true

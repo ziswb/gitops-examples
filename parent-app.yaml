@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: parent-app
+  namespace: argocd
+spec:
+  destination:
+    namespace:
+    in-cluster:
+  project:
+  source:
+    repoURL:
+    targetRevision: HEAD
+    path: apps
+  syncPolicy:
+    automated: {}

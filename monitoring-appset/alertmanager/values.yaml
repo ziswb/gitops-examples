@@ -1,0 +1,4 @@
+---
+alertmanager:
+  persistence:
+    enabled: false
