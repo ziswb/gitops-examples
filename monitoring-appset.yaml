@@ -33,7 +33,7 @@ spec:
           valueFiles:
             - values.yaml
       destination:
-        server: https://kubernetes.default.svc
+        name: in-cluster
         namespace: "{{ .namespace }}" # this is dangerous!
       syncPolicy:
         syncOptions:
