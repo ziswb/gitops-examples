@@ -5,7 +5,7 @@ metadata:
   name: nginx
 spec:
   rules:
-    - host: https://nginx-labs-w30-s027.labs.nws.netways.de
+    - host: nginx-labs-w30-s027.labs.nws.netways.de
       http:
         paths:
           - path: /
